@@ -1,4 +1,4 @@
-# grunt-contrib (*currently in alpha*)
+# grunt-contrib
 
 A collection of general use grunt tasks. All tasks are designed with cross platform support in mind and dependencies that can easily be managed through npm.
 
@@ -47,10 +47,6 @@ Optimize RequireJS projects using r.js.
 
 #### [`stylus`](/gruntjs/grunt-contrib/blob/master/docs/stylus.md)
 Compile Stylus files into CSS.
-
-## Included Helpers
-### [`options`](/gruntjs/grunt-contrib/blob/master/docs/helpers.md#options)
-Unified options retrieval
 
 ## Bugs
 
