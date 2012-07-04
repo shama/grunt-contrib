@@ -14,15 +14,11 @@ module.exports = function(grunt) {
       templateSettings: {}
     });
 
-    var data = this.data;
-
     grunt.verbose.writeflags(options, "Options");
 
-    Object.keys(data.files).forEach(function(dest) {
-      var src = data.files[dest];
-      var srcFiles = grunt.file.expandFiles(src);
-
-      dest = grunt.template.process(dest);
+    
+    this.files.forEach(function(file) {
+      var srcFiles = grunt.file.expandFiles(file.src);
 
       var jstOutput = [];
       var jstNamespace = "this['" + options.namespace + "']";
@@ -36,8 +32,8 @@ module.exports = function(grunt) {
       });
 
       if (jstOutput.length > 0) {
-        grunt.file.write(dest, jstOutput.join("\n\n"));
-        grunt.log.writeln("File '" + dest + "' created.");
+        grunt.file.write(file.dest, jstOutput.join("\n\n"));
+        grunt.log.writeln("File '" + file.dest + "' created.");
       }
     });
   });

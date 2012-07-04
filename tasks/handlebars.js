@@ -11,15 +11,10 @@ module.exports = function(grunt) {
       namespace: "JST"
     });
 
-    var data = this.data;
-
     grunt.verbose.writeflags(options, "Options");
 
-    Object.keys(data.files).forEach(function(dest) {
-      var src = data.files[dest];
-      var srcFiles = grunt.file.expandFiles(src);
-
-      dest = grunt.template.process(dest);
+    this.files.forEach(function(file) {
+      var srcFiles = grunt.file.expandFiles(file.src);
 
       var handlebarOutput = [];
       var handlebarNamespace = "this['" + options.namespace + "']";
@@ -33,8 +28,8 @@ module.exports = function(grunt) {
       });
 
       if (handlebarOutput.length > 0) {
-        grunt.file.write(dest, handlebarOutput.join("\n\n"));
-        grunt.log.writeln("File '" + dest + "' created.");
+        grunt.file.write(file.dest, handlebarOutput.join("\n\n"));
+        grunt.log.writeln("File '" + file.dest + "' created.");
       }
     });
   });

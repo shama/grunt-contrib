@@ -13,23 +13,19 @@ module.exports = function(grunt) {
       stripString: null
     });
 
-    var data = this.data;
-
     if (options.basePath !== null) {
       options.basePath = _(options.basePath).trim("/");
     }
 
     grunt.verbose.writeflags(options, "Options");
 
-    Object.keys(data.files).forEach(function(dest) {
-      var src = data.files[dest];
-      var srcFiles = grunt.file.expandFiles(src);
+    this.files.forEach(function(file) {
+      var srcFiles = grunt.file.expandFiles(file.src);
 
-      dest = grunt.template.process(dest);
-      dest = _(dest).trim("/");
+      file.dest = _(file.dest).trim("/");
 
-      if (require("path").existsSync(dest) === false) {
-        grunt.file.mkdir(dest);
+      if (require("path").existsSync(file.dest) === false) {
+        grunt.file.mkdir(file.dest);
       }
 
       var count = 0;
@@ -58,12 +54,12 @@ module.exports = function(grunt) {
           relative = relative + "/";
         }
 
-        grunt.file.copy(srcFile, dest + "/" + relative + filename);
+        grunt.file.copy(srcFile, file.dest + "/" + relative + filename);
 
         count++;
       });
 
-      grunt.log.writeln("Copied " + count + ' file(s) to "' + dest + '".');
+      grunt.log.writeln("Copied " + count + ' file(s) to "' + file.dest + '".');
     });
   });
 };

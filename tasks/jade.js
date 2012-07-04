@@ -12,7 +12,6 @@ module.exports = function(grunt) {
     var path = require("path");
 
     var options = this.options();
-    var data = this.data;
     var jadeData = options.data;
 
     grunt.verbose.writeflags(options, "Options");
@@ -25,11 +24,8 @@ module.exports = function(grunt) {
       });
     }
 
-    Object.keys(data.files).forEach(function(dest) {
-      var src = data.files[dest];
-      var srcFiles = grunt.file.expandFiles(src);
-
-      dest = grunt.template.process(dest);
+    this.files.forEach(function(file) {
+      var srcFiles = grunt.file.expandFiles(file.src);
 
       var jadeOutput = [];
 
@@ -41,8 +37,8 @@ module.exports = function(grunt) {
       });
 
       if (jadeOutput.length > 0) {
-        grunt.file.write(dest, jadeOutput.join("\n"));
-        grunt.log.writeln("File '" + dest + "' created.");
+        grunt.file.write(file.dest, jadeOutput.join("\n"));
+        grunt.log.writeln("File '" + file.dest + "' created.");
       }
     });
   });

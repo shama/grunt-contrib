@@ -19,7 +19,6 @@ module.exports = function(grunt) {
 
     var supported = ["zip", "tar", "tgz", "gzip"];
     var helper = options.mode + "Helper";
-    var data = this.data;
     var done = this.async();
 
     if (options.basePath !== null) {
@@ -38,27 +37,16 @@ module.exports = function(grunt) {
       return;
     }
 
-    async.forEachSeries(Object.keys(data.files), function(dest, next) {
-      var src = data.files[dest];
-      dest = grunt.template.process(dest);
-
-      if (_.isArray(src)) {
-        src.forEach(function(s, k) {
-          src[k] = grunt.template.process(s);
-        });
-      } else {
-        src = grunt.template.process(src);
-      }
-
-      var srcFiles = grunt.file.expandFiles(src);
+    async.forEachSeries(this.files, function(file, next) {
+      var srcFiles = grunt.file.expandFiles(file.src);
 
       if (options.mode == 'gzip' && srcFiles.length > 1) {
         grunt.warn("Cannot specify multiple input files for gzip compression.");
         srcFiles = srcFiles[0];
       }
 
-      grunt.helper(helper, srcFiles, dest, options, function(written) {
-        grunt.log.writeln('File "' + dest + '" created (' + written + ' bytes written).');
+      grunt.helper(helper, srcFiles, file.dest, options, function(written) {
+        grunt.log.writeln('File "' + file.dest + '" created (' + written + ' bytes written).');
 
         next();
       });
