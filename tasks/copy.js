@@ -24,7 +24,7 @@ module.exports = function(grunt) {
 
       file.dest = _(file.dest).trim("/");
 
-      if (require("path").existsSync(file.dest) === false) {
+      if (grunt.file.exists(file.dest) === false) {
         grunt.file.mkdir(file.dest);
       }
 

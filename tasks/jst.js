@@ -15,7 +15,6 @@ module.exports = function(grunt) {
     });
 
     grunt.verbose.writeflags(options, "Options");
-
     
     this.files.forEach(function(file) {
       var srcFiles = grunt.file.expandFiles(file.src);

@@ -5,7 +5,7 @@ exports.clean = {
     test.expect(1);
 
     var expectA = false;
-    var resultA = require("path").existsSync("fixtures/output");
+    var resultA = grunt.file.exists("fixtures/output");
     test.equal(resultA, expectA, "should rm -rf a directory");
 
     test.done();

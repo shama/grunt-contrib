@@ -7,6 +7,8 @@
 
 module.exports = function(grunt) {
   grunt.registerMultiTask("mincss", "Minify CSS files", function() {
+    var options = this.options();
+
     grunt.verbose.writeflags(options, "Options");
 
     this.files.forEach(function(file) {
