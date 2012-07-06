@@ -70,7 +70,7 @@ npm test
 
 ## Release History
 
-* 2012/XX/XX - v1.0.0 - Intergration with grunt v0.4.0.
+* 2012/XX/XX - v0.2.0 - Integration with grunt v0.4.0.
 * 2012/06/28 - v0.0.9 - Cleanup release with copy task addition (thanks @ctalkington!)
 * 2012/06/12 - v0.0.7 - Add RequireJS task.
 * 2012/06/03 - v0.0.5 - Cleanup release with zip task addition.
