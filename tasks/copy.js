@@ -5,13 +5,23 @@
  */
 
 module.exports = function(grunt) {
+  var path = require("path");
+
   var _ = grunt.util._;
+  var kindOf = grunt.util.kindOf;
 
   grunt.registerMultiTask("copy", "Copy files into another directory.", function() {
     var options = this.options({
       basePath: null,
-      stripString: null
+      processName: false,
+      processContent: false,
+      processContentExclude: []
     });
+
+    var copyOptions = {
+      process: options.processContent,
+      noProcess: options.processContentExclude
+    };
 
     if (options.basePath !== null) {
       options.basePath = _(options.basePath).trim("/");
@@ -30,31 +40,30 @@ module.exports = function(grunt) {
 
       var count = 0;
 
-      srcFiles.forEach(function(srcFile) {
-        var filename = _(srcFile).strRightBack("/");
-        var relative = _(srcFile).strLeftBack("/");
+      var filename = "";
+      var relative = "";
 
-        if (relative === filename) {
-          relative = "";
-        }
+      var destFile = "";
+
+      srcFiles.forEach(function(srcFile) {
+        filename = path.basename(srcFile);
+        relative = path.dirname(srcFile);
 
         if (options.basePath !== null && options.basePath.length > 1) {
           relative = _(relative).strRightBack(options.basePath);
           relative = _(relative).trim("/");
         }
 
-        if (options.stripString !== null) {
-          filename = filename.replace(options.stripString, "");
+        if (options.processName && kindOf(options.processName) === "function") {
+          filename = options.processName(filename);
         }
 
-        // handle paths outside of grunts working dir
+        // make paths outside grunts working dir relative
         relative = relative.replace(/\.\.\//g, "");
 
-        if (relative.length > 0) {
-          relative = relative + "/";
-        }
+        destFile = path.join(file.dest, relative, filename);
 
-        grunt.file.copy(srcFile, file.dest + "/" + relative + filename);
+        grunt.file.copy(srcFile, destFile, copyOptions);
 
         count++;
       });
