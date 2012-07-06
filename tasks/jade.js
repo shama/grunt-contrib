@@ -1,7 +1,7 @@
 /**
  * Task: jade
  * Description: Compile Jade templates to HTML
- * Dependencies: jade, path
+ * Dependencies: jade
  * Contributor: @errcw
  */
 
@@ -9,8 +9,6 @@ module.exports = function(grunt) {
   var _ = grunt.util._;
 
   grunt.registerMultiTask("jade", "Compile Jade templates into HTML.", function() {
-    var path = require("path");
-
     var options = this.options();
     var jadeData = options.data;
 
