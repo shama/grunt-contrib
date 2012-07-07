@@ -68,7 +68,7 @@ module.exports = function(grunt) {
     var zip = require("zipstream").createZip(options);
     var destdir = _(dest).strLeftBack("/");
 
-    if (require("path").existsSync(destdir) === false) {
+    if (grunt.file.exists(destdir) === false) {
       grunt.file.mkdir(destdir);
     }
 
@@ -129,7 +129,7 @@ module.exports = function(grunt) {
 
     tardir = tempdir + "/" + tardir;
 
-    if (require("path").existsSync(destdir) === false) {
+    if (grunt.file.exists(destdir) === false) {
       grunt.file.mkdir(destdir);
     }
 
@@ -173,7 +173,7 @@ module.exports = function(grunt) {
     var zlib = require("zlib");
     var destdir = _(dest).strLeftBack("/");
 
-    if (require("path").existsSync(destdir) === false) {
+    if (grunt.file.exists(destdir) === false) {
       grunt.file.mkdir(destdir);
     }
 
